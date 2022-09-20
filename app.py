@@ -3,7 +3,7 @@ from dotenv import find_dotenv, load_dotenv
 from flask import Flask, jsonify, render_template
 from newsapi import NewsApiClient
 
-app = Flask(
+app = Flask(  # access index.html which serves as the HTML entry-point to the React app
     __name__,
     static_folder="frontend/dist/assets",
     template_folder="frontend/dist",
