@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Box, Badge, SimpleGrid, Link, Center, Image } from '@chakra-ui/react'
+import { Box, Badge, SimpleGrid, Link, Image } from '@chakra-ui/react'
 
 export default function HotNews() {
 

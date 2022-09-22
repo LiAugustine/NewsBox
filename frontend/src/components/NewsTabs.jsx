@@ -1,6 +1,6 @@
-import HotNews from "./HotNews";
-import LocalNews from "./LocalNews";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import HotNews from "./HotNews"
+import LocalNews from "./YourNews"
+import NewsSearch from "./NewsSearch"
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 
 export default function NewsTabs() {
@@ -10,12 +10,18 @@ export default function NewsTabs() {
             <Tabs variant='soft-rounded' colorScheme='green'>
                 <TabList>
                     <Tab>Hot News</Tab>
-                    <Tab>Local News</Tab>
+                    <Tab>News Search</Tab>
+                    <Tab>Your News</Tab>
                 </TabList>
                 <TabPanels>
                     <TabPanel>
                         <HotNews />
                     </TabPanel>
+
+                    <TabPanel>
+                        <NewsSearch />
+                    </TabPanel>
+
                     <TabPanel>
                         <LocalNews />
                     </TabPanel>
