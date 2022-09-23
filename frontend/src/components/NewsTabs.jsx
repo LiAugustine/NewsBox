@@ -1,32 +1,39 @@
 import HotNews from "./HotNews"
-import LocalNews from "./YourNews"
+import YourNews from "./YourNews"
 import NewsSearch from "./NewsSearch"
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import {
+    Center,
+    Tabs, TabList, TabPanel, TabPanels, Tab,
+} from '@chakra-ui/react'
 
 export default function NewsTabs() {
 
     return (
         <div>
+
             <Tabs variant='soft-rounded' colorScheme='green'>
-                <TabList>
-                    <Tab>Hot News</Tab>
-                    <Tab>News Search</Tab>
-                    <Tab>Your News</Tab>
-                </TabList>
+                <Center>
+                    <TabList>
+                        <Tab>Hot News</Tab>
+                        <Tab>Your News</Tab>
+                        <Tab>Advanced News Search</Tab>
+                    </TabList>
+                </Center>
                 <TabPanels>
                     <TabPanel>
                         <HotNews />
                     </TabPanel>
 
                     <TabPanel>
-                        <NewsSearch />
+                        <YourNews />
                     </TabPanel>
 
                     <TabPanel>
-                        <LocalNews />
+                        <NewsSearch />
                     </TabPanel>
                 </TabPanels>
             </Tabs>
-        </div>
+
+        </div >
     );
 }

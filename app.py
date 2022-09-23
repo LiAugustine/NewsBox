@@ -1,12 +1,21 @@
 from os import getenv, environ
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, jsonify, render_template, request
+from flask_talisman import (
+    Talisman,
+)  # Security extension for enforcing HTTP security headers
 from newsapi import NewsApiClient  # Python client library to make NewsAPI requests
 
 app = Flask(  # access index.html which serves as the HTML entry-point to the React app
     __name__,
     static_folder="frontend/dist/assets",
     template_folder="frontend/dist",
+)
+
+Talisman(
+    app,
+    # force_https=False,
+    content_security_policy=None,
 )
 
 load_dotenv(find_dotenv())  # load env variables
@@ -27,7 +36,6 @@ def get_hot_articles():
     """
     newsapi = NewsApiClient(api_key=getenv("NEWS_API"))
     top_headlines = newsapi.get_top_headlines(
-        q="news",
         language="en",
         country="us",
     )
@@ -56,9 +64,9 @@ def get_search_results():
     newsapi = NewsApiClient(api_key=getenv("NEWS_API"))
     search_data = newsapi.get_everything(
         q=search_query.get("q"),
-        qintitle="",
-        sources="",
-        domains="",
+        sources=search_query.get("sources"),
+        domains=search_query.get("domains"),
+        to=search_query.get("to"),
     )
     article_info = search_data["articles"]
     return jsonify(
