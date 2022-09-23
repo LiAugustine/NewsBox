@@ -94,6 +94,7 @@ export default function NewsSearch() {
 
             <Center>
                 <Button colorScheme='green'
+
                     height='50px'
                     width='200px'
                     onClick={onClickSearch}>

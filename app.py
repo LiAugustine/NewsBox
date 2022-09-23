@@ -1,10 +1,10 @@
 from os import getenv, environ
 from dotenv import find_dotenv, load_dotenv
-from flask import Flask, jsonify, render_template, request
+from flask import Flask
 from flask_talisman import (
     Talisman,
 )  # Security extension for enforcing HTTP security headers
-from newsapi import NewsApiClient  # Python client library to make NewsAPI requests
+from api import api
 
 app = Flask(  # access index.html which serves as the HTML entry-point to the React app
     __name__,
@@ -12,77 +12,19 @@ app = Flask(  # access index.html which serves as the HTML entry-point to the Re
     template_folder="frontend/dist",
 )
 
+app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SECRET_KEY"] = getenv("SECRET_KEY")
+
 Talisman(
     app,
-    # force_https=False,
+    force_https=False,
     content_security_policy=None,
 )
 
 load_dotenv(find_dotenv())  # load env variables
 
-
-@app.route("/")
-def index():
-    """
-    Home page, renders HTML entry point to React app.
-    """
-    return render_template("index.html")
-
-
-@app.route("/api/get_hot_articles")
-def get_hot_articles():
-    """
-    Using NewsApi python library, get top headlines in JSON format for the frontend.
-    """
-    newsapi = NewsApiClient(api_key=getenv("NEWS_API"))
-    top_headlines = newsapi.get_top_headlines(
-        language="en",
-        country="us",
-    )
-    article_info = top_headlines["articles"]
-    return jsonify(
-        [
-            {
-                "author": article["author"],
-                "title": article["title"],
-                "description": article["description"],
-                "url": article["url"],
-                "urlToImage": article["urlToImage"],
-                "publishedAt": article["publishedAt"],
-            }
-            for article in article_info
-        ]
-    )
-
-
-@app.route("/api/get_search_results", methods=["POST"])
-def get_search_results():
-    """
-    POST method. Get search query from frontend, then return search results.
-    """
-    search_query = request.json["query"]
-    newsapi = NewsApiClient(api_key=getenv("NEWS_API"))
-    search_data = newsapi.get_everything(
-        q=search_query.get("q"),
-        sources=search_query.get("sources"),
-        domains=search_query.get("domains"),
-        to=search_query.get("to"),
-    )
-    article_info = search_data["articles"]
-    return jsonify(
-        [
-            {
-                "author": article["author"],
-                "title": article["title"],
-                "description": article["description"],
-                "url": article["url"],
-                "urlToImage": article["urlToImage"],
-                "publishedAt": article["publishedAt"],
-            }
-            for article in article_info
-        ]
-    )
-
+app.register_blueprint(api)  # register routes from api.py file
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(environ.get("PORT", 5000)))
