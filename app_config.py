@@ -16,7 +16,7 @@ load_dotenv(find_dotenv())  # load env variables
 GOOGLE_CLIENT_ID = getenv("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = getenv("GOOGLE_CLIENT_SECRET")
 
-app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
+# app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = getenv("SECRET_KEY")
 
