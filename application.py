@@ -1,14 +1,15 @@
+from email.mime import application
 from os import getenv, environ
 from flask import jsonify, render_template, request
 from newsapi import NewsApiClient
-from app_config import app
+from app_config import application
 
 # from models import db, User
 
 # from google_login import google_login
 
 
-@app.route("/")
+@application.route("/")
 def index():
     """
     Home page, renders HTML entry point to React app.
@@ -16,7 +17,7 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/api/get_hot_articles")
+@application.route("/api/get_hot_articles")
 def get_hot_articles():
     """
     Using NewsApi python library, get top headlines in JSON format for the frontend.
@@ -42,7 +43,7 @@ def get_hot_articles():
     )
 
 
-@app.route("/api/get_search_results", methods=["POST"])
+@application.route("/api/get_search_results", methods=["POST"])
 def get_search_results():
     """
     POST method. Get search query from frontend, then return search results.
@@ -71,7 +72,7 @@ def get_search_results():
     )
 
 
-# app.register_blueprint(google_login)  # register google login routes
+# application.register_blueprint(google_login)  # register google login routes
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=int(environ.get("PORT", 5000)))
+    application.run(host="0.0.0.0", port=int(environ.get("PORT", 5000)))
