@@ -1,4 +1,6 @@
 Flask
+flask-login
 flask-talisman
+Flask-SQLAlchemy
 python-dotenv
 newsapi-python

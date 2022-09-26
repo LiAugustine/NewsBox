@@ -1,4 +1,4 @@
-from app import app
+from app_config import app
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 
@@ -11,6 +11,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(100), unique=False, nullable=False)
     picture = db.Column(db.Text, unique=False, nullable=True)
     account_id = db.Column(db.String(100), unique=True, nullable=False)
+    google_id = db.Column(db.String(100), unique=True, nullable=True)
 
 
 db.create_all()

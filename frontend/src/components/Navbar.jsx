@@ -16,12 +16,14 @@ export default function Navbar() {
                     <Heading size='lg' as='span'>NewsBox</Heading>
                 </Box>
                 <Spacer />
-                <Button colorScheme='blue'
+                <a href='/google_login'>
+                    <Button colorScheme='blue'
 
-                    height='45px'
-                    width='100px'>
-                    Sign-in
-                </Button>
+                        height='45px'
+                        width='100px'>
+                        Sign-in
+                    </Button>
+                </a>
             </Flex>
             <Divider orientation="horizontal" />
 
