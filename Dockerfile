@@ -2,7 +2,7 @@
 
 FROM python:3.10-slim-buster
 
-WORKDIR /newsbox-docker
+WORKDIR /current
 
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
