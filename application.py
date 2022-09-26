@@ -1,4 +1,3 @@
-from email.mime import application
 from os import getenv, environ
 from flask import jsonify, render_template, request
 from newsapi import NewsApiClient

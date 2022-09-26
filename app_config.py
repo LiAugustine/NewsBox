@@ -8,8 +8,8 @@ from flask_talisman import (
 application = (
     Flask(  # access index.html which serves as the HTML entry-point to the React app
         __name__,
-        static_folder="frontend/dist/assets",
-        template_folder="frontend/dist",
+        static_folder="dist/assets",
+        template_folder="dist",
     )
 )
 
