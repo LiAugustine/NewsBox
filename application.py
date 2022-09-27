@@ -1,11 +1,59 @@
 from os import getenv, environ
-from flask import jsonify, render_template, request
+from flask import jsonify, render_template, request, redirect
+from flask_login import LoginManager, current_user, login_required, logout_user
 from newsapi import NewsApiClient
+
 from app_config import application
+from models import db, User
+from google_login import google_login
 
-# from models import db, User
+login_manager = LoginManager()
+login_manager.init_app(application)
+login_manager.login_view = "login"
 
-# from google_login import google_login
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    """
+    Message is displayed when a page requires logging in
+    to access, json format.
+    """
+    return jsonify("You must be logged in to perform this action!")
+
+
+@login_manager.user_loader
+def load_user(user_name):
+    """
+    Loads the user via flask-login.
+    """
+    return User.query.get(user_name)
+
+
+@application.route("/logout")
+@login_required
+def logout():
+    """
+    Logs the user out through flask-login
+    and returns to the home page.
+    """
+    logout_user()
+    return redirect("/")
+
+
+@application.route("/api/get_user_data")
+def get_user():
+    """
+    Gets user info if user is logged in.
+    """
+    if current_user.is_authenticated:
+        return jsonify(
+            {
+                "id": current_user.account_id,
+                "name": current_user.name,
+                "picture": current_user.picture,
+            }
+        )
+    return jsonify(False)
 
 
 @application.route("/")
@@ -71,7 +119,7 @@ def get_search_results():
     )
 
 
-# application.register_blueprint(google_login)  # register google login routes
+application.register_blueprint(google_login)  # register google login routes
 
 if __name__ == "__main__":
     application.run(host="0.0.0.0", port=int(environ.get("PORT", 5000)))

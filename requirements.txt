@@ -2,5 +2,7 @@ Flask
 flask-login
 flask-talisman
 Flask-SQLAlchemy
+psycopg2-binary
+oauthlib
 python-dotenv
 newsapi-python
