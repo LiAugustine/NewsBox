@@ -33,9 +33,10 @@ def login():
     )  # Make user select a google account even if they are already logged into one.
 
     redirect_uri = (
-        request.base_url.replace("http://", "https://")
-        if request.base_url != "http://127.0.0.1:5000/google_login"
-        else request.base_url
+        # request.base_url.replace("http://", "https://")
+        # if request.base_url != "http://127.0.0.1:5000/google_login"
+        # else
+        request.base_url
     ) + "/callback"
 
     request_uri = client.prepare_request_uri(
@@ -62,9 +63,10 @@ def callback():
         token_endpoint,
         authorization_response=request.url,
         redirect_url=(
-            request.base_url.replace("http://", "https://")
-            if request.base_url != "http://127.0.0.1:5000/google_login/callback"
-            else request.base_url
+            # request.base_url.replace("http://", "https://")
+            # if request.base_url != "http://127.0.0.1:5000/google_login/callback"
+            # else
+            request.base_url
         ),
         code=code,
     )

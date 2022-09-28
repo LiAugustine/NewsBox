@@ -33,6 +33,6 @@ application.secret_key = getenv("SECRET_KEY")
 
 Talisman(
     application,
-    # force_https=False,
+    force_https=False,
     content_security_policy=None,
 )
