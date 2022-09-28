@@ -46,6 +46,9 @@ def get_user():
     Gets user info if user is logged in.
     """
     if current_user.is_authenticated:
+        print(
+            "Current logged in user: " + current_user.name
+        )  # print for debugging authentication
         return jsonify(
             {
                 "id": current_user.account_id,

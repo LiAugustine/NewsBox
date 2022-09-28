@@ -100,5 +100,8 @@ def callback():
         )
         db.session.commit()
     user = User.query.filter_by(google_id=google_id).first()
+    print(
+        "Logging in: " + user.name
+    )  # print for debugging whether app connected to database
     login_user(user)
     return redirect("/")
