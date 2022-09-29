@@ -28,7 +28,7 @@ if application.config["SQLALCHEMY_DATABASE_URI"].startswith("postgres://"):
     ].replace("postgres://", "postgresql://")
 
 application.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-application.config["SQLALCHEMY_ENGINE_OPTIONS"] = {"pool_pre_ping": True}
+# application.config["SQLALCHEMY_ENGINE_OPTIONS"] = {"pool_pre_ping": True}
 application.secret_key = getenv("SECRET_KEY")
 
 
