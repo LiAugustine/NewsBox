@@ -125,4 +125,4 @@ def get_search_results():
 application.register_blueprint(google_login)  # register google login routes
 
 if __name__ == "__main__":
-    application.run(host="0.0.0.0", port=int(environ.get("PORT", 8080)))
+    application.run(host="0.0.0.0", port=int(environ.get("PORT", 5000)))
