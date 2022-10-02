@@ -5,7 +5,8 @@ from newsapi import NewsApiClient
 
 from app_config import application
 from models import db, User
-from google_login import google_login
+
+# from google_login import google_login
 
 login_manager = LoginManager()
 login_manager.init_app(application)
@@ -40,23 +41,23 @@ def logout():
     return redirect("/")
 
 
-@application.route("/api/get_user_data")
-def get_user():
-    """
-    Gets user info if user is logged in.
-    """
-    if current_user.is_authenticated:
-        print(
-            "Current logged in user: " + current_user.name
-        )  # print for debugging authentication
-        return jsonify(
-            {
-                "id": current_user.account_id,
-                "name": current_user.name,
-                "picture": current_user.picture,
-            }
-        )
-    return jsonify(False)
+# @application.route("/api/get_user_data")
+# def get_user():
+#     """
+#     Gets user info if user is logged in.
+#     """
+#     if current_user.is_authenticated:
+#         print(
+#             "Current logged in user: " + current_user.name
+#         )  # print for debugging authentication
+#         return jsonify(
+#             {
+#                 "id": current_user.account_id,
+#                 "name": current_user.name,
+#                 "picture": current_user.picture,
+#             }
+#         )
+#     return jsonify(False)
 
 
 @application.route("/")
@@ -122,7 +123,7 @@ def get_search_results():
     )
 
 
-application.register_blueprint(google_login)  # register google login routes
+# application.register_blueprint(google_login)  # register google login routes
 
 if __name__ == "__main__":
     application.run(host="0.0.0.0", port=int(environ.get("PORT", 5000)))
