@@ -13,8 +13,8 @@ class Users(db.Model):
     account_id = db.Column(db.String(100), unique=True, nullable=False)
 
 
-class SavedArticles(db.Model):
-    __tablename__ = "Favorites"
+class SavedQueries(db.Model):
+    __tablename__ = "SavedQueries"
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.String(100), ForeignKey("Users.account_id"))
     article_link = db.Column(db.Text, unique=True, nullable=False)

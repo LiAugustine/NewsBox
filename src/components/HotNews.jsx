@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
+import { Link } from "react-router-dom";
 import axios from 'axios'
-import { Box, Badge, SimpleGrid, Link, Image } from '@chakra-ui/react'
-
+import { Center, Tab, Tabs, TabList } from '@chakra-ui/react'
+import NewsResults from "./NewsResults"
 export default function HotNews() {
 
     const [news, setNews] = useState([])
@@ -13,54 +14,23 @@ export default function HotNews() {
             });
     }, []);
 
-    console.log(news)
-
     return (
         <div>
-            <SimpleGrid columns={3} spacingX='3px' spacingY='5px'>
-                {news.map((article) =>
-                    <Box maxW='md' borderWidth='1px' borderRadius='lg' overflow='hidden'>
-                        <Link href={article.url} isExternal>
-                            <Image src={article.urlToImage} alt="" />
-                            <Box p='6'>
-                                <Box display='flex' alignItems='baseline'>
-                                    <Badge borderRadius='full' px='2' colorScheme='teal'>
-                                        {article.author}
-                                    </Badge>
-                                    <Box
-                                        color='gray.500'
-                                        fontWeight='semibold'
-                                        letterSpacing='wide'
-                                        fontSize='xs'
-                                        textTransform='uppercase'
-                                        ml='2'
-                                    >
-                                        {article.publishedAt}
-                                    </Box>
-                                </Box>
+            <Center>
+                <Tabs variant='soft-rounded' colorScheme='green'>
+                    <TabList>
 
-                                <Box
-                                    mt='1'
-                                    fontWeight='semibold'
-                                    as='h4'
-                                    lineHeight='tight'
-                                    noOfLines={2}
-                                >
-                                    {article.title}
-                                </Box>
+                        <Tab as={Link} to="/">Hot News</Tab>
 
-                                <Box>
-                                    <Box as='span' color='gray.500' fontSize='sm' fontWeight='semibold'>
-                                        {article.description}
-                                    </Box>
-                                </Box>
-                            </Box>
-                        </Link>
-                    </Box>
+                        {/* <Tab as={Link} to="/YourNews">Your News</Tab> */}
 
-                )
-                }
-            </SimpleGrid>
+                        <Tab as={Link} to="/NewsSearch">Advanced News Search</Tab>
+
+                    </TabList>
+                </Tabs>
+            </Center>
+            <br></br>
+            <NewsResults results={news} />
         </div>
     )
 }

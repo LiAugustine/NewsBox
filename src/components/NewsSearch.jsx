@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from "react-router-dom";
 import axios from 'axios'
 import { format } from 'date-fns';
 import {
@@ -7,8 +8,12 @@ import {
     Button,
     Input, FormControl, FormLabel,
     FormHelperText,
-    Box, Badge, SimpleGrid, Link, Image
+    Tab, Tabs, TabList,
+    Box, Badge, SimpleGrid, Image
+
 } from '@chakra-ui/react'
+import NewsResults from "./NewsResults"
+
 
 
 export default function NewsSearch() {
@@ -39,6 +44,19 @@ export default function NewsSearch() {
 
     return (
         <div>
+            <Center>
+                <Tabs variant='soft-rounded' colorScheme='green' defaultIndex={1}>
+                    <TabList>
+
+                        <Tab as={Link} to="/">Hot News</Tab>
+
+                        {/* <Tab as={Link} to="/YourNews">Your News</Tab> */}
+
+                        <Tab as={Link} to="/NewsSearch">Advanced News Search</Tab>
+
+                    </TabList>
+                </Tabs>
+            </Center>
             <br></br>
             <Center>
                 <Box>
@@ -116,50 +134,7 @@ export default function NewsSearch() {
                 </Heading>
             </Center>
 
-            <SimpleGrid columns={3} spacingX='3px' spacingY='5px'>
-                {results.map((article) =>
-                    <Box maxW='md' borderWidth='1px' borderRadius='lg' overflow='hidden'>
-                        <Link href={article.url} isExternal>
-                            <Image src={article.urlToImage} alt="" />
-                            <Box p='6'>
-                                <Box display='flex' alignItems='baseline'>
-                                    <Badge borderRadius='full' px='2' colorScheme='teal'>
-                                        {article.author}
-                                    </Badge>
-                                    <Box
-                                        color='gray.500'
-                                        fontWeight='semibold'
-                                        letterSpacing='wide'
-                                        fontSize='xs'
-                                        textTransform='uppercase'
-                                        ml='2'
-                                    >
-                                        {article.publishedAt}
-                                    </Box>
-                                </Box>
-
-                                <Box
-                                    mt='1'
-                                    fontWeight='semibold'
-                                    as='h4'
-                                    lineHeight='tight'
-                                    noOfLines={2}
-                                >
-                                    {article.title}
-                                </Box>
-
-                                <Box>
-                                    <Box as='span' color='gray.500' fontSize='sm' fontWeight='semibold'>
-                                        {article.description}
-                                    </Box>
-                                </Box>
-                            </Box>
-                        </Link>
-                    </Box>
-
-                )
-                }
-            </SimpleGrid>
+            <NewsResults results={results} />
 
         </div >
 
