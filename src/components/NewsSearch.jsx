@@ -9,7 +9,7 @@ import {
     Input, FormControl, FormLabel,
     FormHelperText,
     Tab, Tabs, TabList,
-    Box, Badge, SimpleGrid, Image
+    Box
 
 } from '@chakra-ui/react'
 import NewsResults from "./NewsResults"

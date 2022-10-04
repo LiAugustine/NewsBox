@@ -26,6 +26,7 @@ from models import db, Users, SavedQueries
 
 
 @application.route("/")
+@application.route("/NewsSearch")
 def index():
     """
     Home page, renders HTML entry point to React app.
