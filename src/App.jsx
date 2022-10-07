@@ -66,7 +66,9 @@ export default function App() {
     <div>
       <Flex minWidth='max-content' alignItems='center' gap='2'>
         <Box>
-          <Heading size='lg'>NewsBox</Heading>
+          <a href="/">
+            <Heading size='lg'>NewsBox</Heading>
+          </a>
         </Box>
         <Spacer />
         <Input type="simpleQuery" name="q" htmlSize={50} width='auto' placeholder='Search news here!' onChange={changeHandler} />
