@@ -48,7 +48,6 @@ export default function App() {
           }
         })
         setUser(res.data)
-        // console.log({ user })
       } catch (err) {
         console.log(err)
 
