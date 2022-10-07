@@ -3,7 +3,8 @@ from flask import jsonify, render_template, request, redirect
 from newsapi import NewsApiClient
 
 from app_config import application
-from models import db, Users, SavedQueries
+
+# from models import db, Users, SavedQueries
 
 
 # @application.route("/api/get_user_data")
