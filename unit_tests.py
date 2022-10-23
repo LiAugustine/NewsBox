@@ -26,7 +26,7 @@ class FileTests(unittest.TestCase):
     def test_docker_exists(self):
         file_path = path.join(Path(__file__).parent, "Dockerfile")
         file_exists = path.isfile(file_path)
-        self.assertEqual(file_exists, True)
+        self.assertEqual(file_exists, False)
 
 
 if __name__ == "__main__":
