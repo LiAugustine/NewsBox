@@ -20,4 +20,5 @@ class SavedQueries(db.Model):
     article_link = db.Column(db.Text, unique=True, nullable=False)
 
 
-db.create_all()
+with application.app_context():  # fixes potential database error: "RuntimeError: Working outside of application context."
+    db.create_all()
