@@ -4,26 +4,7 @@ from newsapi import NewsApiClient
 
 from app_config import application
 
-# from models import db, Users, SavedQueries
-
-
-# @application.route("/api/get_user_data")
-# def get_user():
-#     """
-#     Gets user info if user is logged in.
-#     """
-#     if current_user.is_authenticated:
-#         print(
-#             "Current logged in user: " + current_user.name
-#         )  # print for debugging authentication
-#         return jsonify(
-#             {
-#                 "id": current_user.account_id,
-#                 "name": current_user.name,
-#                 "picture": current_user.picture,
-#             }
-#         )
-#     return jsonify(False)
+from models import db, Users, SavedQueries
 
 
 @application.route("/")

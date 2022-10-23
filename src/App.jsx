@@ -1,5 +1,5 @@
 import NewsRoutes from "./components/NewsRoutes"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useGoogleLogin } from '@react-oauth/google';
 import { format } from 'date-fns';
@@ -8,7 +8,9 @@ import {
   Input,
   Button,
   Spacer,
-  Divider
+  Divider,
+  Avatar, Wrap, WrapItem,
+  Popover, PopoverTrigger, Portal, PopoverContent, PopoverArrow, PopoverHeader, PopoverCloseButton, PopoverBody,
 } from '@chakra-ui/react'
 import NewsResults from "./components/NewsResults"
 
@@ -37,7 +39,22 @@ export default function App() {
       })
   }
 
-  const [user, setUser] = useState(false)
+  {/* 
+This section handles login functionality.
+Google login library is used. When user is logged in, login data is persisted in local storage
+until the user logs out. If user reloads page while logged in, useEffect hook retrieves user data from local storage.
+Logging out clears local storage.
+  */}
+
+  const [user, setUser] = useState()
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user")
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser)
+      setUser(foundUser)
+    }
+  }, []);
 
   const login = useGoogleLogin({
     onSuccess: async response => {
@@ -48,6 +65,8 @@ export default function App() {
           }
         })
         setUser(res.data)
+        localStorage.setItem('user', JSON.stringify(res.data))
+        console.log(res.data)
       } catch (err) {
         console.log(err)
 
@@ -58,9 +77,9 @@ export default function App() {
 
   const logout = () => {
     setUser(false)
+    localStorage.clear()
   }
-
-
+  {/* end of login */ }
   return (
     <div>
       <Flex minWidth='max-content' alignItems='center' gap='2'>
@@ -79,30 +98,61 @@ export default function App() {
         <Spacer />
 
 
-        {user ?
-          (
-            <div>
-              <Button
-                onClick={logout}
-                colorScheme='red'
-                height='45px'
-                width='100px'>
-                Logout
+        {user ? (
+          <Popover>
+            <PopoverTrigger>
+              <Button size='lg'>
+                <Wrap>
+                  <WrapItem>
+                    <Avatar size='sm' src={user.picture} />
+                  </WrapItem>
+                </Wrap>
+                {user.name}
               </Button>
-            </div>
-          ) : (
+            </PopoverTrigger>
+            <Portal>
+              <PopoverContent>
+                <PopoverArrow />
+                <PopoverHeader>Account Options</PopoverHeader>
+                <PopoverCloseButton />
+                <PopoverBody>
+                  <Button
+                    onClick={logout}
+                    colorScheme='red'
+                    height='45px'
+                    width='100px'>
+                    Logout
+                  </Button>
+                </PopoverBody>
 
-            <div>
-              <Button
-                onClick={login}
-                colorScheme='blue'
-                height='45px'
-                width='100px'>
-                Login
-              </Button>
-            </div>
-          )
-        }
+              </PopoverContent>
+            </Portal>
+          </Popover>
+        ) : (
+          <Popover>
+            <PopoverTrigger>
+              <Button colorScheme='green' size='lg'
+              >Sign-in</Button>
+            </PopoverTrigger>
+            <Portal>
+              <PopoverContent>
+                <PopoverArrow />
+                <PopoverHeader>Sign-in Options</PopoverHeader>
+                <PopoverCloseButton />
+                <PopoverBody>
+                  <Button
+                    onClick={login}
+                    colorScheme='blue'
+                    height='45px'
+                    width='100px'>
+                    Login
+                  </Button>
+                </PopoverBody>
+
+              </PopoverContent>
+            </Portal>
+          </Popover>
+        )}
 
 
 

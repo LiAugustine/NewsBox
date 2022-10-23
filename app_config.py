@@ -21,14 +21,14 @@ GOOGLE_CLIENT_SECRET = getenv("GOOGLE_CLIENT_SECRET")
 
 environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"  # set environment to HTTPS
 
-# application.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
-# if application.config["SQLALCHEMY_DATABASE_URI"].startswith("postgres://"):
-#     application.config["SQLALCHEMY_DATABASE_URI"] = application.config[
-#         "SQLALCHEMY_DATABASE_URI"
-#     ].replace("postgres://", "postgresql://")
+application.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
+if application.config["SQLALCHEMY_DATABASE_URI"].startswith("postgres://"):
+    application.config["SQLALCHEMY_DATABASE_URI"] = application.config[
+        "SQLALCHEMY_DATABASE_URI"
+    ].replace("postgres://", "postgresql://")
 
-# application.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-# application.config["SQLALCHEMY_ENGINE_OPTIONS"] = {"pool_pre_ping": True}
+application.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+application.config["SQLALCHEMY_ENGINE_OPTIONS"] = {"pool_pre_ping": True}
 application.secret_key = getenv("SECRET_KEY")
 
 
