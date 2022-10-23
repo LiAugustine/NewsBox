@@ -11,7 +11,7 @@ export default function NewsTabs() {
             <Router>
                 <Routes>
                     <Route path="/" element={<HotNews />} />
-                    {/* <Route path="/YourNews" element={<YourNews />} /> */}
+                    <Route path="/YourNews" element={<YourNews />} />
                     <Route path="/NewsSearch" element={<NewsSearch />} />
                 </Routes>
             </Router>

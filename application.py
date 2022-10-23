@@ -6,9 +6,10 @@ from app_config import application
 
 from models import db, Users, SavedQueries
 
-
+# Makes sure all routes load page.
 @application.route("/")
 @application.route("/NewsSearch")
+@application.route("/YourNews")
 def index():
     """
     Home page, renders HTML entry point to React app.

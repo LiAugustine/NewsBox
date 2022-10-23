@@ -22,7 +22,7 @@ export default function HotNews() {
 
                         <Tab as={Link} to="/">Hot News</Tab>
 
-                        {/* <Tab as={Link} to="/YourNews">Your News</Tab> */}
+                        <Tab as={Link} to="/YourNews">Your News</Tab>
 
                         <Tab as={Link} to="/NewsSearch">Advanced News Search</Tab>
 

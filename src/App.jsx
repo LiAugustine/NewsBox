@@ -66,7 +66,7 @@ Logging out clears local storage.
         })
         setUser(res.data)
         localStorage.setItem('user', JSON.stringify(res.data))
-        console.log(res.data)
+        window.location.reload();
       } catch (err) {
         console.log(err)
 
@@ -78,8 +78,10 @@ Logging out clears local storage.
   const logout = () => {
     setUser(false)
     localStorage.clear()
+    window.location.reload();
   }
-  {/* end of login */ }
+  {/* end of login section */ }
+
   return (
     <div>
       <Flex minWidth='max-content' alignItems='center' gap='2'>
@@ -143,9 +145,8 @@ Logging out clears local storage.
                   <Button
                     onClick={login}
                     colorScheme='blue'
-                    height='45px'
-                    width='100px'>
-                    Login
+                    height='45px'>
+                    Sign-in with Google!
                   </Button>
                 </PopoverBody>
 

@@ -45,12 +45,12 @@ export default function NewsSearch() {
     return (
         <div>
             <Center>
-                <Tabs variant='soft-rounded' colorScheme='green' defaultIndex={1}>
+                <Tabs variant='soft-rounded' colorScheme='green' defaultIndex={2}>
                     <TabList>
 
                         <Tab as={Link} to="/">Hot News</Tab>
 
-                        {/* <Tab as={Link} to="/YourNews">Your News</Tab> */}
+                        <Tab as={Link} to="/YourNews">Your News</Tab>
 
                         <Tab as={Link} to="/NewsSearch">Advanced News Search</Tab>
 
@@ -58,6 +58,7 @@ export default function NewsSearch() {
                 </Tabs>
             </Center>
             <br></br>
+
             <Center>
                 <Box>
                     <Heading as="h3" size="lg">
@@ -66,9 +67,8 @@ export default function NewsSearch() {
                     <br></br>
                 </Box>
             </Center>
+
             <Center>
-
-
                 <Box>
 
                     <FormControl isRequired>
