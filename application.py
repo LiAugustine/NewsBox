@@ -1,10 +1,10 @@
 from os import getenv, environ
-from flask import jsonify, render_template, request, redirect
+from flask import jsonify, render_template, request
 from newsapi import NewsApiClient
 
 from app_config import application
 
-from models import db, Users, SavedQueries
+from models import db, SavedArticles
 
 # Makes sure all routes load page.
 @application.route("/")
@@ -68,6 +68,72 @@ def get_search_results():
                 "publishedAt": article["publishedAt"],
             }
             for article in article_info
+        ]
+    )
+
+
+@application.route("/api/save_article", methods=["POST"])
+def save_article():
+    article = request.json
+
+    new_article = SavedArticles(
+        user_id=article.get("user_id"),
+        url=article.get("url"),
+        title=article.get("title"),
+        description=article.get("description"),
+        image=article.get("image"),
+        author=article.get("author"),
+        published_at=article.get("publishedAt"),
+    )
+    try:
+        db.session.add(new_article)
+        db.session.commit()
+        return jsonify("You saved the article " + article.get("title"))
+    except:
+        return jsonify("You already saved the article " + article.get("title"))
+
+
+@application.route("/api/get_saved_articles", methods=["POST"])
+def get_saved_articles():
+    data = request.json["user"]
+    user_id = data.get("sub")
+    saved_articles = SavedArticles.query.filter_by(user_id=user_id).all()
+
+    return jsonify(
+        [
+            {
+                "url": article.url,
+                "title": article.title,
+                "description": article.description,
+                "image": article.image,
+                "author": article.author,
+                "publishedAt": article.published_at,
+            }
+            for article in saved_articles
+        ]
+    )
+
+
+@application.route("/api/delete_article", methods=["POST"])
+def delete_article():
+    article = request.json
+    user_id = article.get("user_id")
+    url = article.get("url")
+    SavedArticles.query.filter_by(user_id=user_id, url=url).delete()
+    db.session.commit()
+
+    saved_articles = SavedArticles.query.filter_by(user_id=user_id).all()
+    return jsonify(
+        [
+            {
+                "url": article.url,
+                "title": article.title,
+                "description": article.description,
+                "image": article.image,
+                "author": article.author,
+                "publishedAt": article.published_at,
+            }
+            for article in saved_articles
         ]
     )
 

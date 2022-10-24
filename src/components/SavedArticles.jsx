@@ -3,18 +3,12 @@ import {
     Center,
     Text,
     Button,
-    Box, Badge, SimpleGrid, Image
+    Box, Badge, SimpleGrid, Image,
 
 } from '@chakra-ui/react'
 import axios from 'axios'
 
-const NewsResults = (props) => {
-    const [articleResults, setArticleResults] = useState([])
-
-    useEffect(() => {
-        setArticleResults(props.results)
-    }, [props.results])
-
+const SavedArticles = (props) => {
     const [user, setUser] = useState()
 
     useEffect(() => {
@@ -25,21 +19,32 @@ const NewsResults = (props) => {
         }
     }, []);
 
-    const onClickSave = (user_id, url, title, description, image, author, publishedAt) => {
-        axios.post('/api/save_article', {
-            user_id, url, title, description, image, author, publishedAt
+    const [articleResults, setArticleResults] = useState([])
+
+    useEffect(() => {
+        setArticleResults(props.results)
+    }, [props.results])
+
+
+    const onClickDelete = (user_id, url) => {
+        axios.post('/api/delete_article', {
+            user_id, url
         })
-            .then(response => {
-                alert(response.data);
+            .then((response) => {
+                setArticleResults(response.data)
+            })
+            .then(() => {
+                alert("You deleted the article!");
             }
             )
     }
 
     return (
         <Center>
-            <SimpleGrid columns={3} spacingX='3px' spacingY='5px'>
+            <SimpleGrid columns={1} spacingX='3px' spacingY='5px'>
                 {articleResults.map((article) =>
                     <Box maxW='md' borderWidth='1px' borderRadius='lg' overflow='hidden'>
+
                         <Image src={article.urlToImage} alt="" />
                         <Box p='6'>
                             <a href={article.url} target="_blank" rel="noopener noreferrer">
@@ -69,7 +74,6 @@ const NewsResults = (props) => {
                                     {article.title}
                                 </Box>
 
-
                                 <Box>
                                     <Box as='span' color='gray.500' fontSize='sm' fontWeight='semibold'>
                                         {article.description}
@@ -77,28 +81,16 @@ const NewsResults = (props) => {
                                 </Box>
                             </a>
 
-                            {user ?
-                                (
-                                    <Button onClick={() => onClickSave(
+                            <Center>
+                                <Button colorScheme='red'
+                                    onClick={() => onClickDelete(
                                         user.sub,
-                                        article.url,
-                                        article.title,
-                                        article.description,
-                                        article.image,
-                                        article.author,
-                                        article.publishedAt)}>
-                                        Save article!
-                                    </Button>
-                                ) :
-                                (
-                                    <Text as='u'>
-                                        Sign in to save articles.
-                                    </Text>
-                                )
-                            }
+                                        article.url)}>
+                                    Delete!
+                                </Button>
+                            </Center>
 
                         </Box>
-
                     </Box>
 
                 )
@@ -107,4 +99,4 @@ const NewsResults = (props) => {
         </Center>
     )
 }
-export default NewsResults;
+export default SavedArticles;

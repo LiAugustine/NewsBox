@@ -80,6 +80,7 @@ Logging out clears local storage.
     localStorage.clear()
     window.location.reload();
   }
+
   {/* end of login section */ }
 
   return (

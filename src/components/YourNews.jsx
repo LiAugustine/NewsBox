@@ -9,11 +9,13 @@ import {
     Text,
     Tab, Tabs, TabList,
 } from '@chakra-ui/react'
+import SavedArticles from "./SavedArticles"
 import { useGoogleLogin } from '@react-oauth/google';
 
 export default function YourNews() {
 
     const [user, setUser] = useState()
+    const [savedArticles, setSavedArticles] = useState([])
 
     useEffect(() => {
         const loggedInUser = localStorage.getItem("user")
@@ -21,7 +23,19 @@ export default function YourNews() {
             const foundUser = JSON.parse(loggedInUser)
             setUser(foundUser)
         }
+
     }, []);
+
+    useEffect(() => {
+        if (typeof (user) !== "undefined") {
+            axios.post("/api/get_saved_articles", {
+                user
+            })
+                .then((response) => {
+                    setSavedArticles(response.data)
+                })
+        }
+    }, [user])
 
     const login = useGoogleLogin({
         onSuccess: async response => {
@@ -42,6 +56,7 @@ export default function YourNews() {
         }
     });
 
+
     return (
         <div>
             <Center>
@@ -61,9 +76,11 @@ export default function YourNews() {
                     <div>
                         <Center>
                             <Text fontSize='3xl'>
-                                WIP
+                                Your saved articles:
                             </Text>
                         </Center>
+
+                        <SavedArticles results={savedArticles} />
                     </div>
                 ) :
                 (
