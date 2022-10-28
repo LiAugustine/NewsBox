@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HotNews from "./HotNews"
 import YourNews from "./YourNews"
+import Customize from "./YourNewsCustomization"
 import NewsSearch from "./NewsSearch"
 
 export default function NewsTabs() {
@@ -10,8 +11,9 @@ export default function NewsTabs() {
 
             <Router>
                 <Routes>
-                    <Route path="/" element={<HotNews />} />
-                    <Route path="/YourNews" element={<YourNews />} />
+                    <Route path="/" element={<YourNews />} />
+                    <Route path="/Customize" element={<Customize />} />
+                    <Route path="/HotNews" element={<HotNews />} />
                     <Route path="/NewsSearch" element={<NewsSearch />} />
                 </Routes>
             </Router>

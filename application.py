@@ -6,7 +6,7 @@ from app_config import application
 
 from models import db, SavedArticles
 
-# Makes sure all routes load page.
+# Makes sure all routes load the page.
 @application.route("/")
 @application.route("/NewsSearch")
 @application.route("/YourNews")
@@ -70,6 +70,11 @@ def get_search_results():
             for article in article_info
         ]
     )
+
+
+@application.route("/api/save_search_query", methods=["POST"])
+def save_search_query():
+    pass
 
 
 @application.route("/api/save_article", methods=["POST"])

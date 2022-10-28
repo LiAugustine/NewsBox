@@ -45,7 +45,7 @@ const SavedArticles = (props) => {
                 {articleResults.map((article) =>
                     <Box maxW='md' borderWidth='1px' borderRadius='lg' overflow='hidden'>
 
-                        <Image src={article.urlToImage} alt="" />
+                        <Image src={article.image} alt="" />
                         <Box p='6'>
                             <a href={article.url} target="_blank" rel="noopener noreferrer">
                                 <Box display='flex' alignItems='baseline'>

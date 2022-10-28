@@ -45,13 +45,12 @@ export default function NewsSearch() {
     return (
         <div>
             <Center>
-                <Tabs variant='soft-rounded' colorScheme='green' defaultIndex={2}>
+                <Tabs variant='soft-rounded' colorScheme='green' defaultIndex={3}>
                     <TabList>
 
-                        <Tab as={Link} to="/">Hot News</Tab>
-
-                        <Tab as={Link} to="/YourNews">Your News</Tab>
-
+                        <Tab as={Link} to="/">Your News</Tab>
+                        <Tab as={Link} to="/Customize">Customize Your Feed</Tab>
+                        <Tab as={Link} to="/HotNews">Hot News</Tab>
                         <Tab as={Link} to="/NewsSearch">Advanced News Search</Tab>
 
                     </TabList>
