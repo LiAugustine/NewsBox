@@ -1,5 +1,6 @@
 from os import getenv, environ
 from flask import jsonify, render_template, request
+from random import randrange
 from newsapi import NewsApiClient
 
 from app_config import application
@@ -83,9 +84,9 @@ def get_saved_queries():
 
 @application.route("/api/save_query", methods=["POST"])
 def save_query():
-    q_data = request.json
-    user_id = q_data.get("user_id")
-    query = q_data.get("queryToBeAdded")
+    q = request.json
+    user_id = q.get("user_id")
+    query = q.get("queryToBeAdded")
     new_query = SavedQueries(user_id=user_id, saved_query=query)
     db.session.add(new_query)
     db.session.commit()
@@ -104,6 +105,25 @@ def delete_query():
 
     saved_queries = SavedQueries.query.filter_by(user_id=user_id).all()
     return jsonify([{"query": q.saved_query} for q in saved_queries])
+
+
+@application.route("/api/get_saved_query_results", methods=["POST"])
+def get_saved_query_results():
+    data = request.json["user"]
+    user_id = data.get("sub")
+    saved_queries = SavedQueries.query.filter_by(user_id=user_id).all()
+    query_count = SavedQueries.query.filter_by(user_id=user_id).count()
+    query_results = []
+    newsapi = NewsApiClient(api_key=getenv("NEWS_API"))
+    for q in saved_queries:
+        search_data = newsapi.get_everything(
+            q=q.saved_query,
+            page_size=5,
+        )
+        article_info = search_data["articles"]
+        query_results.append(article_info)
+
+    return jsonify(query_results[randrange(query_count)])
 
 
 @application.route("/api/save_article", methods=["POST"])

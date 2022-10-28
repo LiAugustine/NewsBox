@@ -15,12 +15,12 @@ import {
 } from '@chakra-ui/react'
 import SavedArticles from "./SavedArticles"
 import LoginRequired from "./LoginRequired"
+import NewsResults from "./NewsResults"
 import { useGoogleLogin } from '@react-oauth/google';
 
 export default function YourNews() {
 
     const [user, setUser] = useState()
-    const [savedArticles, setSavedArticles] = useState([])
 
     useEffect(() => {
         const loggedInUser = localStorage.getItem("user")
@@ -30,6 +30,21 @@ export default function YourNews() {
         }
 
     }, []);
+
+    const [savedQueryResults, setSavedQueryResults] = useState([])
+
+    useEffect(() => {
+        if (typeof (user) !== "undefined") {
+            axios.post("/api/get_saved_query_results", {
+                user
+            })
+                .then((response) => {
+                    setSavedQueryResults(response.data)
+                })
+        }
+    }, [user])
+
+    const [savedArticles, setSavedArticles] = useState([])
 
     useEffect(() => {
         if (typeof (user) !== "undefined") {
@@ -41,7 +56,6 @@ export default function YourNews() {
                 })
         }
     }, [user])
-
 
 
     return (
@@ -75,7 +89,9 @@ export default function YourNews() {
                                     </AccordionButton>
                                 </h2>
                                 <AccordionPanel pb={4}>
-
+                                    <Text fontSize='xl'> Your news feed (based on saved queries).
+                                    </Text>
+                                    <NewsResults results={savedQueryResults} />
                                 </AccordionPanel>
 
                             </AccordionItem>
@@ -92,6 +108,8 @@ export default function YourNews() {
                                     </AccordionButton>
                                 </h2>
                                 <AccordionPanel pb={4}>
+                                    <Text fontSize='xl'> Your saved articles.
+                                    </Text>
                                     <SavedArticles results={savedArticles} />
                                 </AccordionPanel>
                             </AccordionItem>
@@ -107,7 +125,8 @@ export default function YourNews() {
                                     </AccordionButton>
                                 </h2>
                                 <AccordionPanel pb={4}>
-                                    Saved articles here.
+                                    <Text fontSize='xl'> Viewed articles.
+                                    </Text>
                                 </AccordionPanel>
                             </AccordionItem>
                         </Accordion>
