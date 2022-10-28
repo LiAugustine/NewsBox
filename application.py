@@ -4,10 +4,11 @@ from newsapi import NewsApiClient
 
 from app_config import application
 
-from models import db, SavedArticles
+from models import db, SavedQueries, SavedArticles, ViewedArticles
 
 # Makes sure all routes load the page.
 @application.route("/")
+@application.route("/Customize")
 @application.route("/NewsSearch")
 @application.route("/YourNews")
 def index():
@@ -72,15 +73,42 @@ def get_search_results():
     )
 
 
-@application.route("/api/save_search_query", methods=["POST"])
-def save_search_query():
-    pass
+@application.route("/api/get_saved_queries", methods=["POST"])
+def get_saved_queries():
+    data = request.json["user"]
+    user_id = data.get("sub")
+    saved_queries = SavedQueries.query.filter_by(user_id=user_id).all()
+    return jsonify([{"query": q.saved_query} for q in saved_queries])
+
+
+@application.route("/api/save_query", methods=["POST"])
+def save_query():
+    q_data = request.json
+    user_id = q_data.get("user_id")
+    query = q_data.get("queryToBeAdded")
+    new_query = SavedQueries(user_id=user_id, saved_query=query)
+    db.session.add(new_query)
+    db.session.commit()
+
+    saved_queries = SavedQueries.query.filter_by(user_id=user_id).all()
+    return jsonify([{"query": q.saved_query} for q in saved_queries])
+
+
+@application.route("/api/delete_query", methods=["POST"])
+def delete_query():
+    q = request.json
+    user_id = q.get("user_id")
+    saved_query = q.get("query")
+    SavedQueries.query.filter_by(user_id=user_id, saved_query=saved_query).delete()
+    db.session.commit()
+
+    saved_queries = SavedQueries.query.filter_by(user_id=user_id).all()
+    return jsonify([{"query": q.saved_query} for q in saved_queries])
 
 
 @application.route("/api/save_article", methods=["POST"])
 def save_article():
     article = request.json
-
     new_article = SavedArticles(
         user_id=article.get("user_id"),
         url=article.get("url"),

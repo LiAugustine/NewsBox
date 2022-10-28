@@ -1,18 +1,16 @@
 import { useState, useEffect } from 'react'
 import {
-    Alert,
-    AlertIcon,
-    AlertTitle,
-    AlertDescription,
 
+    Input, FormControl, FormLabel, FormHelperText,
     Center,
-    Button,
-    Box,
-    Text,
+    Button, IconButton,
+    Text, Heading,
     Tab, Tabs, TabList,
 } from '@chakra-ui/react'
 
+import { CloseIcon } from '@chakra-ui/icons'
 import { Link } from "react-router-dom";
+import axios from 'axios'
 import LoginRequired from "./LoginRequired"
 
 
@@ -28,6 +26,45 @@ export default function Customize() {
         }
 
     }, []);
+
+    const [queries, setQueries] = useState([])
+
+    useEffect(() => {
+        if (typeof (user) !== "undefined") {
+            axios.post("/api/get_saved_queries", {
+                user
+            })
+                .then((response) => {
+                    setQueries(response.data)
+                })
+        }
+    }, [user])
+
+    const [queryToBeAdded, setQueryToBeAdded] = useState("")
+
+    const queryChangeHandler = (e) => {
+        setQueryToBeAdded(e.target.value)
+    };
+
+    const onClickAdd = (user_id, queryToBeAdded) => {
+        axios.post('/api/save_query', {
+            user_id, queryToBeAdded
+        })
+            .then(response => {
+                setQueries(response.data)
+            })
+    }
+
+    const onClickDelete = (user_id, query) => {
+        axios.post('/api/delete_query', {
+            user_id, query
+        })
+            .then(response => {
+                setQueries(response.data)
+            })
+    }
+
+
 
 
     return (
@@ -48,18 +85,68 @@ export default function Customize() {
                     <div>
 
                         <Center>
-                            <Text fontSize='3xl'> Saved Queries
-                            </Text>
-
+                            <Heading as="h3" size="lg">
+                                Manage Queries
+                            </Heading>
                         </Center>
 
-                        <Alert status='info' variant='left-accent'>
-                            <Center>
-                                <AlertIcon />
+                        <Center>
+                            <Text as='i' fontSize="xl">
+                                News results from saved queries appear in your feed. Add up to 3 queries.
+                            </Text>
+                        </Center>
+                        <br></br>
 
-                                Save desired news queries. Results from these queries appear in your feed.
+                        <FormControl>
+                            <Center><FormLabel>Add query</FormLabel></Center>
+                            <Center> <Input type='query' name='q' htmlSize={40} width='auto' onChange={queryChangeHandler} /></Center>
+                        </FormControl>
+
+                        <Center>
+                            <Button colorScheme='green'
+
+                                height='35px'
+                                width='160px'
+                                onClick={() => onClickAdd(
+                                    user.sub,
+                                    queryToBeAdded
+                                )}
+                            >
+
+                                Add query!
+                            </Button>
+                        </Center>
+                        <br></br>
+
+                        <Center>
+                            <Heading as="h3" size="lg">
+                                Queries
+                            </Heading>
+                        </Center>
+
+                        {queries.map((query) =>
+                            <Center>
+                                <Text fontSize='xl'>
+                                    {query.query}
+                                </Text>
+
+                                <IconButton
+                                    colorScheme='red'
+                                    aria-label='Delete Query'
+                                    size='sm'
+                                    icon={<CloseIcon />}
+                                    onClick={
+                                        () => onClickDelete(
+                                            user.sub,
+                                            query.query,
+                                        )
+                                    }
+                                />
                             </Center>
-                        </Alert>
+                        )}
+
+
+
 
                     </div>
                 ) :

@@ -8,7 +8,7 @@ class SavedQueries(db.Model):
     __tablename__ = "SavedQueries"
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Text, unique=False, nullable=False)
-    query = db.Column(db.String(100), unique=True, nullable=False)
+    saved_query = db.Column(db.String(100), unique=True, nullable=False)
 
 
 class SavedArticles(db.Model):
