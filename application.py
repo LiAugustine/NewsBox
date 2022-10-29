@@ -7,7 +7,8 @@ from app_config import application
 
 from models import db, SavedQueries, SavedArticles, ViewedArticles
 
-# Makes sure all routes load the page.
+# The following routes correspond to frontend routes created by react-router-dom.
+# Putting these routes ensures those routes load properly on a page-refresh.
 @application.route("/")
 @application.route("/Customize")
 @application.route("/NewsSearch")
@@ -16,7 +17,7 @@ def index():
     """
     Home page, renders HTML entry point to React app.
     """
-    return render_template("index.html")
+    return render_template("index.html")  # Entry point for React app.
 
 
 @application.route("/api/get_hot_articles")
@@ -74,16 +75,24 @@ def get_search_results():
     )
 
 
+# The following section handles the saved queries logic.
 @application.route("/api/get_saved_queries", methods=["POST"])
 def get_saved_queries():
+    """
+    POST method. Get logged-in user from React, return db query containing
+    saved queries for that user.
+    """
     data = request.json["user"]
-    user_id = data.get("sub")
+    user_id = data.get("sub")  # sub corresponds to unique user ID created by google
     saved_queries = SavedQueries.query.filter_by(user_id=user_id).all()
     return jsonify([{"query": q.saved_query} for q in saved_queries])
 
 
 @application.route("/api/save_query", methods=["POST"])
 def save_query():
+    """
+    POST method. Get user and query from React, save to database, return updated queries to React.
+    """
     q = request.json
     user_id = q.get("user_id")
     query = q.get("queryToBeAdded")
@@ -97,6 +106,10 @@ def save_query():
 
 @application.route("/api/delete_query", methods=["POST"])
 def delete_query():
+    """
+    POST method. Get user and query to be deleted, then delete the query.
+    Feed updated queries to React.
+    """
     q = request.json
     user_id = q.get("user_id")
     saved_query = q.get("query")
@@ -109,6 +122,11 @@ def delete_query():
 
 @application.route("/api/get_saved_query_results", methods=["POST"])
 def get_saved_query_results():
+    """
+    POST method. Get logged in user, then get search queries the user saved.
+    Then, for each query, get news results from News API.
+    Return results to React.
+    """
     data = request.json["user"]
     user_id = data.get("sub")
     saved_queries = SavedQueries.query.filter_by(user_id=user_id).all()
@@ -128,6 +146,11 @@ def get_saved_query_results():
 
 @application.route("/api/save_article", methods=["POST"])
 def save_article():
+    """
+    POST method. Get article info from frontend, then save to database.
+    Try-except for handling situation where user already saved article
+    (no duplicates allowed).
+    """
     article = request.json
     new_article = SavedArticles(
         user_id=article.get("user_id"),
@@ -148,6 +171,10 @@ def save_article():
 
 @application.route("/api/get_saved_articles", methods=["POST"])
 def get_saved_articles():
+    """
+    POST method. Get logged in user from frontend, then query Saved Articles table.
+    Return in JSON format using list-comprehension.
+    """
     data = request.json["user"]
     user_id = data.get("sub")
     saved_articles = SavedArticles.query.filter_by(user_id=user_id).all()
@@ -169,6 +196,11 @@ def get_saved_articles():
 
 @application.route("/api/delete_article", methods=["POST"])
 def delete_article():
+    """
+    POST method. Deletes saved article.
+    Get logged in user from frontend and url of article to be deleted.
+    Return updated saved articles to React.
+    """
     article = request.json
     user_id = article.get("user_id")
     url = article.get("url")
