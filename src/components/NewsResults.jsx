@@ -8,6 +8,7 @@ import {
 } from '@chakra-ui/react'
 import axios from 'axios'
 
+
 const NewsResults = (props) => {
     const [articleResults, setArticleResults] = useState([])
 

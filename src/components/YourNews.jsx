@@ -14,6 +14,7 @@ import {
     Tab, Tabs, TabList,
 } from '@chakra-ui/react'
 import SavedArticles from "./SavedArticles"
+import TabLinks from "./TabLinks"
 import LoginRequired from "./LoginRequired"
 import NewsResults from "./NewsResults"
 import { useGoogleLogin } from '@react-oauth/google';
@@ -60,19 +61,7 @@ export default function YourNews() {
 
     return (
         <div>
-            <Center>
-                <Tabs variant='soft-rounded' colorScheme='green' defaultIndex={0}>
-                    <TabList>
-                        <Tab as={Link} to="/">Your News</Tab>
-                        <Tab as={Link} to="/Customize">Customize Your Feed</Tab>
-                        <Tab as={Link} to="/HotNews">Hot News</Tab>
-                        <Tab as={Link} to="/NewsSearch">Advanced News Search</Tab>
-                    </TabList>
-                </Tabs>
-
-
-
-            </Center>
+            <TabLinks tab={0} />
             <br></br>
             {user ?
                 (

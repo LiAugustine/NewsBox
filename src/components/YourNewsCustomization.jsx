@@ -11,6 +11,7 @@ import {
 import { CloseIcon } from '@chakra-ui/icons'
 import { Link } from "react-router-dom";
 import axios from 'axios'
+import TabLinks from "./TabLinks"
 import LoginRequired from "./LoginRequired"
 
 
@@ -69,16 +70,9 @@ export default function Customize() {
 
     return (
         <div>
-            <Center>
-                <Tabs variant='soft-rounded' colorScheme='green' defaultIndex={1}>
-                    <TabList>
-                        <Tab as={Link} to="/">Your News</Tab>
-                        <Tab as={Link} to="/Customize">Customize Your Feed</Tab>
-                        <Tab as={Link} to="/HotNews">Hot News</Tab>
-                        <Tab as={Link} to="/NewsSearch">Advanced News Search</Tab>
-                    </TabList>
-                </Tabs>
-            </Center>
+
+            <TabLinks tab={1} />
+
             <br></br>
             {user ?
                 (
