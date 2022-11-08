@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import {
     Center,
-    Text,
     Button,
     Box, Badge, SimpleGrid, Image,
 

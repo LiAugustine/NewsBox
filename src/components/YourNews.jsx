@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { Link } from "react-router-dom";
 import axios from 'axios'
 import {
     Accordion,
@@ -7,17 +6,13 @@ import {
     AccordionButton,
     AccordionPanel,
     AccordionIcon,
-    Center,
-    Button,
     Box,
     Text,
-    Tab, Tabs, TabList,
 } from '@chakra-ui/react'
 import SavedArticles from "./SavedArticles"
-import TabLinks from "./TabLinks"
+import NewsTabs from "./NewsTabs"
 import LoginRequired from "./LoginRequired"
 import NewsResults from "./NewsResults"
-import { useGoogleLogin } from '@react-oauth/google';
 
 export default function YourNews() {
 
@@ -61,7 +56,7 @@ export default function YourNews() {
 
     return (
         <div>
-            <TabLinks tab={0} />
+            <NewsTabs tab={0} />
             <br></br>
             {user ?
                 (

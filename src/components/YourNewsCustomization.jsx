@@ -1,17 +1,15 @@
 import { useState, useEffect } from 'react'
 import {
 
-    Input, FormControl, FormLabel, FormHelperText,
+    Input, FormControl, FormLabel,
     Center,
     Button, IconButton,
     Text, Heading,
-    Tab, Tabs, TabList,
 } from '@chakra-ui/react'
 
 import { CloseIcon } from '@chakra-ui/icons'
-import { Link } from "react-router-dom";
 import axios from 'axios'
-import TabLinks from "./TabLinks"
+import NewsTabs from "./NewsTabs"
 import LoginRequired from "./LoginRequired"
 
 
@@ -71,7 +69,7 @@ export default function Customize() {
     return (
         <div>
 
-            <TabLinks tab={1} />
+            <NewsTabs tab={1} />
 
             <br></br>
             {user ?

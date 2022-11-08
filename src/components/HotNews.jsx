@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Link } from "react-router-dom";
 import axios from 'axios'
-import { Center, Tab, Tabs, TabList } from '@chakra-ui/react'
-import TabLinks from "./TabLinks"
+import NewsTabs from "./NewsTabs"
 import NewsResults from "./NewsResults"
 export default function HotNews() {
 
@@ -17,7 +15,7 @@ export default function HotNews() {
 
     return (
         <div>
-            <TabLinks tab={2} />
+            <NewsTabs tab={2} />
 
             <br></br>
             <NewsResults results={news} />

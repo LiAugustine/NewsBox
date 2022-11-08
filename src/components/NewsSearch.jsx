@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Link } from "react-router-dom";
 import axios from 'axios'
 import { format } from 'date-fns';
 import {
@@ -8,11 +7,10 @@ import {
     Button,
     Input, FormControl, FormLabel,
     FormHelperText,
-    Tab, Tabs, TabList,
     Box
 
 } from '@chakra-ui/react'
-import TabLinks from "./TabLinks"
+import NewsTabs from "./NewsTabs"
 import NewsResults from "./NewsResults"
 
 
@@ -45,7 +43,7 @@ export default function NewsSearch() {
 
     return (
         <div>
-            <TabLinks tab={3} />
+            <NewsTabs tab={3} />
             <br></br>
 
             <Center>
