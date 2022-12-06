@@ -1,11 +1,18 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import {
     Center,
-    Text,
-    Button,
-    Box, Badge, SimpleGrid, Image
+    Heading, Text,
+    Divider,
+    Button, IconButton,
+    Box, Badge, SimpleGrid, Image,
+    Stack,
+    Flex,
+    Card, CardHeader, CardBody, CardFooter,
+    Spacer,
+
 
 } from '@chakra-ui/react'
+import { SlSocialTwitter, SlSocialReddit } from "react-icons/sl";
 import axios from 'axios'
 
 
@@ -38,74 +45,84 @@ const NewsResults = (props) => {
 
     return (
         <Center>
-            <SimpleGrid columns={3} spacingX='3px' spacingY='5px'>
+            <SimpleGrid columns={3} spacingX='10px' spacingY='10px'>
                 {articleResults.map((article) =>
-                    <Box maxW='md' borderWidth='1px' borderRadius='lg' overflow='hidden'>
-                        <Image src={article.urlToImage} alt="" />
-                        <Box p='6'>
-                            <a href={article.url} target="_blank" rel="noopener noreferrer">
-                                <Box display='flex' alignItems='baseline'>
-                                    <Badge borderRadius='full' px='2' colorScheme='teal'>
-                                        {article.author}
-                                    </Badge>
+                    <Card maxW='md'>
+                        <a href={article.url} target="_blank" rel="noopener noreferrer">
+                            <CardBody>
+
+                                <Image
+                                    src={article.urlToImage}
+                                    alt=""
+                                    objectFit='cover'
+                                    height={230}
+                                    width="md"
+                                />
+
+                                <Stack mt='2' spacing='2'>
+
                                     <Box
-                                        color='gray.500'
-                                        fontWeight='semibold'
-                                        letterSpacing='wide'
-                                        fontSize='xs'
-                                        textTransform='uppercase'
-                                        ml='2'
-                                    >
-                                        {article.publishedAt}
+                                        noOfLines={2}>
+                                        <Heading size='md'>{article.title}</Heading>
                                     </Box>
-                                </Box>
 
-                                <Box
-                                    mt='1'
-                                    fontWeight='semibold'
-                                    as='h4'
-                                    lineHeight='tight'
-                                    noOfLines={2}
-                                >
-                                    {article.title}
-                                </Box>
+                                    <Flex w="100%">
+                                        <Text fontSize="sm" as="u">{article.author}</Text>
+                                        <Spacer />
+                                        <Badge colorScheme='blue' fontSize='sm' borderRadius="full">{article.publishedAt}</Badge>
+                                    </Flex>
 
 
-                                <Box>
-                                    <Box as='span' color='gray.500' fontSize='sm' fontWeight='semibold'>
+                                    <Box
+                                        noOfLines={2}>
                                         {article.description}
                                     </Box>
-                                </Box>
-                            </a>
-
-                            {user ?
-                                (
-                                    <Button onClick={() => onClickSave(
+                                </Stack>
+                            </CardBody>
+                            <Divider />
+                        </a>
+                        <CardFooter>
+                            <Flex w="100%">
+                                <Button variant='solid' colorScheme='green'
+                                    onClick={() => onClickSave(
                                         user.sub,
                                         article.url,
                                         article.title,
                                         article.description,
-                                        article.image,
+                                        article.urlToImage,
                                         article.author,
-                                        article.publishedAt)}>
-                                        Save article!
-                                    </Button>
-                                ) :
-                                (
-                                    <Text as='u'>
-                                        Sign in to save articles.
-                                    </Text>
-                                )
-                            }
+                                        article.publishedAt)}
+                                >
+                                    Save Article
+                                </Button>
+                                <Spacer />
+                                <Stack direction="row" spacing={2}>
 
-                        </Box>
+                                    <a href={"https://twitter.com/search?q=" + article.title.split(' ').slice(0, 3).join(' ')} target="_blank" rel="noopener noreferrer">
+                                        <IconButton
+                                            colorScheme='twitter'
+                                            variant='outline'
+                                            icon={<SlSocialTwitter />}
+                                        />
+                                    </a>
+                                    <a href={"https://www.reddit.com/search/?q=" + article.title.split(' ').slice(0, 3).join(' ')} target="_blank" rel="noopener noreferrer">
+                                        <IconButton
+                                            colorScheme='red'
+                                            variant='outline'
+                                            icon={<SlSocialReddit />}
+                                        />
+                                    </a>
 
-                    </Box>
+                                </Stack>
+                            </Flex>
+                        </CardFooter>
+
+                    </Card>
 
                 )
                 }
             </SimpleGrid>
-        </Center>
+        </Center >
     )
 }
 export default NewsResults;

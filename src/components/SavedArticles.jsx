@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react"
 import {
+    Text,
     Center,
     Button,
     Box, Badge, SimpleGrid, Image,
+    Card, CardBody, CardFooter, Stack,
+    Flex, Divider, Heading, Spacer
 
 } from '@chakra-ui/react'
 import axios from 'axios'
@@ -40,46 +43,43 @@ const SavedArticles = (props) => {
 
     return (
         <Center>
-            <SimpleGrid columns={1} spacingX='3px' spacingY='5px'>
+            <SimpleGrid columns={1} spacingY='10px'>
                 {articleResults.map((article) =>
-                    <Box maxW='md' borderWidth='1px' borderRadius='lg' overflow='hidden'>
+                    <Card maxW='md'>
+                        <a href={article.url} target="_blank" rel="noopener noreferrer">
+                            <CardBody>
 
-                        <Image src={article.image} alt="" />
-                        <Box p='6'>
-                            <a href={article.url} target="_blank" rel="noopener noreferrer">
-                                <Box display='flex' alignItems='baseline'>
-                                    <Badge borderRadius='full' px='2' colorScheme='teal'>
-                                        {article.author}
-                                    </Badge>
+                                <Image
+                                    src={article.image}
+                                    alt=""
+                                    objectFit='cover'
+                                    height={230}
+                                    width="md"
+                                />
+
+                                <Stack mt='2' spacing='2'>
+
                                     <Box
-                                        color='gray.500'
-                                        fontWeight='semibold'
-                                        letterSpacing='wide'
-                                        fontSize='xs'
-                                        textTransform='uppercase'
-                                        ml='2'
-                                    >
-                                        {article.publishedAt}
+                                        noOfLines={2}>
+                                        <Heading size='md'>{article.title}</Heading>
                                     </Box>
-                                </Box>
 
-                                <Box
-                                    mt='1'
-                                    fontWeight='semibold'
-                                    as='h4'
-                                    lineHeight='tight'
-                                    noOfLines={2}
-                                >
-                                    {article.title}
-                                </Box>
+                                    <Flex w="100%">
+                                        <Text fontSize="sm" as="u">{article.author}</Text>
+                                        <Spacer />
+                                        <Badge colorScheme='blue' fontSize='sm' borderRadius="full">{article.publishedAt}</Badge>
+                                    </Flex>
 
-                                <Box>
-                                    <Box as='span' color='gray.500' fontSize='sm' fontWeight='semibold'>
+
+                                    <Box
+                                        noOfLines={2}>
                                         {article.description}
                                     </Box>
-                                </Box>
-                            </a>
-
+                                </Stack>
+                            </CardBody>
+                            <Divider />
+                        </a>
+                        <CardFooter>
                             <Center>
                                 <Button colorScheme='red'
                                     onClick={() => onClickDelete(
@@ -88,10 +88,8 @@ const SavedArticles = (props) => {
                                     Delete!
                                 </Button>
                             </Center>
-
-                        </Box>
-                    </Box>
-
+                        </CardFooter>
+                    </Card>
                 )
                 }
             </SimpleGrid>

@@ -2,7 +2,6 @@ from os import getenv, environ
 from flask import jsonify, render_template, request
 from random import randrange
 from newsapi import NewsApiClient
-
 from app_config import application
 
 from models import db, SavedQueries, SavedArticles, ViewedArticles
@@ -12,6 +11,7 @@ from models import db, SavedQueries, SavedArticles, ViewedArticles
 @application.route("/")
 @application.route("/Customize")
 @application.route("/NewsSearch")
+@application.route("/HotNews")
 @application.route("/YourNews")
 def index():
     """
@@ -31,6 +31,7 @@ def get_hot_articles():
         country="us",
     )
     article_info = top_headlines["articles"]
+
     return jsonify(
         [
             {

@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.11",
-    "@chakra-ui/react": "^2.3.4",
-    "@emotion/react": "^11.10.4",
-    "@emotion/styled": "^11.10.4",
+    "@chakra-ui/react": "^2.4.2",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "axios": "^0.27.2",
     "date-fns": "^2.29.3",
     "dotenv": "^16.0.2",
@@ -20,7 +20,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
-    "react-router-dom": "^6.4.0"
+    "react-router-dom": "^6.4.0",
+    "react-twitter-widgets": "^1.11.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",

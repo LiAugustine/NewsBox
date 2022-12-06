@@ -2,16 +2,22 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useGoogleLogin } from '@react-oauth/google';
 import { format } from 'date-fns';
+import { Link } from "react-router-dom"
 import {
-    Box, Heading, Flex,
+
+    Heading, Flex,
     Input,
     Button,
     Spacer,
+    HStack,
+    Image,
     Divider,
-    Avatar, Wrap, WrapItem,
+    Avatar,
     Popover, PopoverTrigger, Portal, PopoverContent, PopoverArrow, PopoverHeader, PopoverCloseButton, PopoverBody,
 } from '@chakra-ui/react'
+import boxImg from '../assets/box.png';
 import NewsResults from "./NewsResults"
+
 
 export default function App() {
 
@@ -84,12 +90,17 @@ Logging out clears local storage.
 
     return (
         <div>
-            <Flex minWidth='max-content' alignItems='center' gap='2'>
-                <Box>
-                    <a href="/">
-                        <Heading size='lg'>NewsBox</Heading>
-                    </a>
-                </Box>
+
+            <Flex minWidth='max-content' alignItems='center' gap='1'>
+                <HStack as={Link} to="/">
+                    <Image src={boxImg}
+                        height={10}
+                        width={10}
+                    >
+                    </Image>
+                    <Heading size='lg'>NewsBox</Heading>
+                </HStack>
+
                 <Spacer />
                 <Input type="simpleQuery" name="q" htmlSize={50} width='auto' placeholder='Search news here!' onChange={changeHandler} />
                 <Button onClick={onClickSearch}
@@ -103,13 +114,11 @@ Logging out clears local storage.
                 {user ? (
                     <Popover>
                         <PopoverTrigger>
-                            <Button size='lg'>
-                                <Wrap>
-                                    <WrapItem>
-                                        <Avatar size='sm' src={user.picture} />
-                                    </WrapItem>
-                                </Wrap>
-                                {user.name}
+                            <Button size='lg' variant='ghost'>
+                                <HStack>
+                                    <Avatar size='sm' src={user.picture} />
+                                    <Heading size='md'>{user.name}</Heading>
+                                </HStack>
                             </Button>
                         </PopoverTrigger>
                         <Portal>
@@ -158,13 +167,14 @@ Logging out clears local storage.
 
 
             </Flex>
+
             <Divider orientation="horizontal" />
             <br></br>
             <NewsResults results={results} />
 
 
 
-        </div>
+        </div >
 
     );
 }
