@@ -103,6 +103,7 @@ Logging out clears local storage.
 
                 <Spacer />
                 <Input type="simpleQuery" name="q" htmlSize={50} width='auto' placeholder='Search news here!' onChange={changeHandler} />
+
                 <Button onClick={onClickSearch}
                     colorScheme='green'>
                     Search!

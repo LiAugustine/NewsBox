@@ -83,18 +83,26 @@ const NewsResults = (props) => {
                         </a>
                         <CardFooter>
                             <Flex w="100%">
-                                <Button variant='solid' colorScheme='green'
-                                    onClick={() => onClickSave(
-                                        user.sub,
-                                        article.url,
-                                        article.title,
-                                        article.description,
-                                        article.urlToImage,
-                                        article.author,
-                                        article.publishedAt)}
-                                >
-                                    Save Article
-                                </Button>
+                                {user ?
+                                    (<Button variant='solid' colorScheme='green'
+                                        onClick={() => onClickSave(
+                                            user.sub,
+                                            article.url,
+                                            article.title,
+                                            article.description,
+                                            article.urlToImage,
+                                            article.author,
+                                            article.publishedAt)}
+                                    >
+                                        Save Article
+                                    </Button>
+                                    ) :
+                                    (
+                                        <Text as='u'>
+                                            Sign-in to save articles.
+                                        </Text>
+                                    )
+                                }
                                 <Spacer />
                                 <Stack direction="row" spacing={2}>
 
