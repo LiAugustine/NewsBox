@@ -97,22 +97,6 @@ export default function YourNews() {
                                     <SavedArticles results={savedArticles} />
                                 </AccordionPanel>
                             </AccordionItem>
-
-                            <AccordionItem>
-                                <h2>
-                                    <AccordionButton>
-                                        <Box flex='1' textAlign='left'>
-                                            <Text fontSize='3xl'> Viewed Articles
-                                            </Text>
-                                        </Box>
-                                        <AccordionIcon />
-                                    </AccordionButton>
-                                </h2>
-                                <AccordionPanel pb={4}>
-                                    <Text fontSize='xl'> Viewed articles.
-                                    </Text>
-                                </AccordionPanel>
-                            </AccordionItem>
                         </Accordion>
                     </div>
                 ) :
