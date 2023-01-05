@@ -52,6 +52,7 @@ export default function App() {
             .then((response) => {
                 setResults(response.data)
             })
+        onOpen()
     }
 
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -191,7 +192,26 @@ Logging out clears local storage.
             <br></br>
             <br></br>
 
-            <NewsResults results={results} />
+            <Modal onClose={onClose} size='6xl' isOpen={isOpen}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>
+                        <Heading as='h3' size='lg'>
+                            Search results for {query.q}
+                        </Heading>
+                    </ModalHeader>
+
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <NewsResults results={results} />
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button onClick={onClose}>Close</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+
+
 
 
         </div >

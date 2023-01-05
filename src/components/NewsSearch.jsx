@@ -115,12 +115,6 @@ export default function NewsSearch() {
 
             <br></br>
 
-            <Center>
-                <Heading as="h4" size='lg'>
-                    Search Results:
-                </Heading>
-            </Center>
-
             <NewsResults results={results} />
 
         </div >

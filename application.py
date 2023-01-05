@@ -59,6 +59,7 @@ def get_search_results():
         sources=search_query.get("sources"),
         domains=search_query.get("domains"),
         to=search_query.get("to"),
+        page_size=30,
     )
     article_info = search_data["articles"]
     return jsonify(
